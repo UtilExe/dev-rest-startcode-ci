@@ -62,8 +62,8 @@ public class MovieResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new Movie("Some txt","More text");
-        r2 = new Movie("aaa","bbb");
+      /*  r1 = new Movie("Some txt","More text");
+        r2 = new Movie("aaa","bbb");*/
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();

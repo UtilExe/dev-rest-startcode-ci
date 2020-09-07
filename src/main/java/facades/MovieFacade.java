@@ -56,8 +56,8 @@ public class MovieFacade {
         EntityManager em = emf.createEntityManager();
         try {
             Movie query = em.createQuery(
-                    "SELECT p from BankCustomer p WHERE p.firstName = :firstName", Movie.class).
-                    setParameter("firstName", title).getSingleResult();
+                    "SELECT p from Movie p WHERE p.title = :title", Movie.class).
+                    setParameter("title", title).getSingleResult();
             // Consider changing to getResultList(), so it displays the list with all customers that has lastName X. 
             return new MovieDTO(query);
         } catch (NoResultException nre) {
@@ -90,7 +90,7 @@ public class MovieFacade {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Movie> query 
-                    = em.createQuery("Select p from BankCustomer p", Movie.class);
+                    = em.createQuery("Select p from Movie p", Movie.class);
             List<Movie> result = query.getResultList();
 
             return result;

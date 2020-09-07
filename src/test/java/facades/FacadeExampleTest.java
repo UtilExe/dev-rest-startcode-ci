@@ -41,8 +41,8 @@ public class FacadeExampleTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new Movie("Some txt", "More text"));
-            em.persist(new Movie("aaa", "bbb"));
+        /*    em.persist(new Movie("Some txt", "More text"));
+            em.persist(new Movie("aaa", "bbb"));*/
 
             em.getTransaction().commit();
         } finally {
