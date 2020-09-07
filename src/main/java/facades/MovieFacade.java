@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.ArrayList;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -52,41 +53,52 @@ public class MovieFacade {
         }
     }
     
-    public MovieDTO getMovieByTitle(String title) {
-        EntityManager em = emf.createEntityManager();
+    public List<MovieDTO> getMovieByTitle(String title) {
+        EntityManager em = getEntityManager();
         try {
-            Movie query = em.createQuery(
-                    "SELECT p from Movie p WHERE p.title = :title", Movie.class).
-                    setParameter("title", title).getSingleResult();
-            // Consider changing to getResultList(), so it displays the list with all customers that has lastName X. 
-            return new MovieDTO(query);
-        } catch (NoResultException nre) {
-            /* If the lastName doesn't exist, it will result in an Exception crash.
-           Added an exception check to prevent it from crashing. persistence.NoResultException.
-             */
-            System.out.println("Could not find: " + title);
-            return null;
+            TypedQuery<Movie> query = em.createQuery("SELECT p from Movie p WHERE p.title = :title", Movie.class);
+            query.setParameter("title", title);
+            List<Movie> es = query.getResultList();
+            List<MovieDTO> result = new ArrayList();
+            for(Movie e : es) {
+                result.add(new MovieDTO(e));
+            }
+            return result;
         } finally {
             em.close();
         }
     }
     
-    public Movie addMovie(Movie movie) {
-        Movie movies = new Movie(movie.getYear(), movie.getTitle(), movie.getActors(), movie.getAverageRating(),
-                movie.getGenre(), movie.getInternalRating());
+    public List<MovieDTO> getAllMovies() {
+      EntityManager em = emf.createEntityManager();
+        try {
+            List<MovieDTO> listen = new ArrayList<>();
+            TypedQuery<Movie> query = em.createQuery("SELECT e FROM Movie e", Movie.class);
+            List<Movie> list = query.getResultList();
+            for (Movie employee : list) {
+                listen.add(new MovieDTO(employee));
+            }
+            
+            return listen;
+        } finally {
+            em.close();
+        }
+    }
+        public Movie addMovie(Movie mov) {
+        Movie movie = new Movie(mov.getYear(), mov.getTitle(), mov.getActors(), 
+                mov.getAverageRating(),  mov.getGenre(), mov.getInternalRating());
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(movie);
             em.getTransaction().commit();
-            return movies;
+            return mov;
           //  return result;
         } finally {
             em.close();
         }
-    }
-    
-    public List<Movie> getAllMovies() {
+
+ /*   public List<Movie> getAllMovies() {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Movie> query 
@@ -98,17 +110,6 @@ public class MovieFacade {
             em.close();
         }
     }
-    
-    //TODO Remove/Change this before use
-    public long getRenameMeCount(){
-        EntityManager em = emf.createEntityManager();
-        try{
-            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
-            return renameMeCount;
-        }finally{  
-            em.close();
-        }
-        
+    */
     }
-
 }

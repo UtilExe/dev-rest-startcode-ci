@@ -8,7 +8,9 @@ import utils.EMF_Creator;
 import facades.MovieFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,17 +39,25 @@ public class MovieResource {
     @Path("all/")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Movie> getAllMovies() {
+    public List<MovieDTO> getAllMovies() {
         return facade.getAllMovies();
     }
-    
-    @Path("name/{name}")
+
+    @Path("name/{title}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public MovieDTO getMoviesByTitle(@PathParam("title") String title) {
-        return facade.getMovieByTitle(title);
+    public String getMoviesByTitle(@PathParam("title") String title) {
+        List<MovieDTO> movies = facade.getMovieByTitle(title);
+        String jsonString = new Gson().toJson(movies);
+        return jsonString;
     }
-            
+         
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Movie create(Movie entity) {
+        return facade.addMovie(entity);
+    }
+    /*
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String demo() {
@@ -60,5 +70,5 @@ public class MovieResource {
         long count = facade.getRenameMeCount();
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
-    }
+    }*/
 }

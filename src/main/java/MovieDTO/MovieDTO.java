@@ -45,6 +45,10 @@ public class MovieDTO {
     public String getGenre() {
         return genre;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "MovieDTO{" + "id=" + id + ", year=" + year + ", title=" + title + ", actors=" + actors + ", averageRating=" + averageRating + ", genre=" + genre + '}';
+    }
+
 }
