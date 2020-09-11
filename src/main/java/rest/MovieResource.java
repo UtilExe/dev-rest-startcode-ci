@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("xxx")
+@Path("movie")
 public class MovieResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -51,18 +51,28 @@ public class MovieResource {
         String jsonString = new Gson().toJson(movies);
         return jsonString;
     }
+    
+    @Path("count")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getRenameMeCount() {
+        long count = facade.getMovieCount();
+        //System.out.println("--------------->"+count);
+        return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
+    }
          
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Movie create(Movie entity) {
         return facade.addMovie(entity);
     }
-    /*
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String demo() {
         return "{\"msg\":\"Hello World\"}";
     }
+    /*
     @Path("count")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
