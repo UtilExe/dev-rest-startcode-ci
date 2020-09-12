@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie API Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+
+        <h2> Movie API </h2>
+        <br><br>
+        <h4> Alle film </h4>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Titel</th>
+                    <th scope="col">År</th>
+                    <th scope="col">Medvirkende</th>
+                </tr>
+            </thead>
+            <tbody id = "Movies" >
+
+            </tbody>
+        </table>
+        
+        <button id ="button">Fetch all movies</button><br><br>
+        
+        <br><br><br>
+        <h4> Specifik film </h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Titel</th>
+                    <th scope="col">År</th>
+                    <th scope="col">Medvirkende</th>
+                </tr>
+            </thead>
+            <tbody id = "specificMovie" >
+
+            </tbody>
+        </table>
+        
+        <label for="specificMovieID"></label><br>
+        <input type="text" id="specificMovieID" name="specificMovieID" value=""><br>
+        <button id ="buttonMovie">Fetch by id</button><br><br>
+
+
+    </body>
+</html>
